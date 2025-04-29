@@ -10,6 +10,8 @@ import org.example.util.Department;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 
@@ -57,5 +59,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return mapper.map(employeeRepository
                 .save(mapper.map(employee , EmployeeEntity.class))
                 ,Employee.class);
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll()
+                .stream().map(employeeEntity -> mapper.map(employeeEntity , Employee.class))
+                .toList();
     }
 }
