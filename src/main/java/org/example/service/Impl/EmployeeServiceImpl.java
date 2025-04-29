@@ -67,4 +67,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .stream().map(employeeEntity -> mapper.map(employeeEntity , Employee.class))
                 .toList();
     }
+
+    @Override
+    public Boolean deleteEmployeee(Integer id) {
+        if (employeeRepository.existsById(id)){
+            employeeRepository.deleteById(id);
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

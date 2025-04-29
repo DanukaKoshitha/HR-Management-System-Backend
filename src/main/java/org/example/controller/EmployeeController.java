@@ -7,7 +7,6 @@ import org.example.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -36,7 +35,7 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<?> updateEmployee(@RequestBody Employee employee) {
         try {
             Employee updated = service.updateEmployee(employee);
@@ -53,5 +52,16 @@ public class EmployeeController {
     @GetMapping("/view")
     public List<Employee> getAll(){
         return service.getAllEmployees();
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteEmployee(Integer id){
+        Boolean isDeleted = service.deleteEmployeee(id);
+
+        if (isDeleted){
+            return ResponseEntity.ok("Delete Successfull");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
+        }
     }
 }
